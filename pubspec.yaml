@@ -1,0 +1,41 @@
+name: trstore
+description: "A new Flutter project."
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.6
+  get: ^4.6.6
+  flutter_screenutil: ^5.9.0
+  dio: ^5.4.0
+  logger: ^2.0.2+1
+  flutter_launcher_icons: ^0.13.1
+  cached_network_image: ^3.3.1
+  connectivity_plus: ^2.3.8
+  carousel_slider: ^4.2.1
+  sqflite: ^2.3.2
+  google_fonts: ^6.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/images/app_icon.png"
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/icons/
