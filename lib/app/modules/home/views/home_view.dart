@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:trstore/app/modules/home/views/product_details_view.dart';
 import 'package:trstore/constants/app_colors.dart';
-import 'package:trstore/constants/app_images.dart';
 import 'package:trstore/constants/app_text.dart';
 import 'package:trstore/helpers/helpers.dart';
 import '../controllers/home_controller.dart';
@@ -55,7 +55,7 @@ class HomeView extends GetView<HomeController> {
                 child: Column(
                   children: [
                     CustomNetworkImage(
-                      url: controller.products[index].image ?? "",
+                      url: controller.products[index].thumbnail ?? "",
                       height: 100.sp,
                       radius: 10.sp,
                       width: double.infinity,
@@ -93,29 +93,34 @@ class HomeView extends GetView<HomeController> {
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: AppColors.primary,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(12.r),
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.to(() => ProductDetailsView(controller.products[index]));
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: AppColors.primary,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(12.r),
+                                      ),
                                     ),
-                                  ),
-                                  padding: EdgeInsets.symmetric(vertical: 3.sp, horizontal: 6.sp),
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.shopping_bag,
-                                        color: AppColors.canvasColor,
-                                        size: 14.sp,
-                                      ),
-                                      3.horizontalSpace,
-                                      Text(
-                                        "Add",
-                                        style: bold.copyWith(color: Colors.white, fontSize: 11.sp),
-                                      ),
-                                    ],
+                                    padding: EdgeInsets.symmetric(vertical: 3.sp, horizontal: 6.sp),
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.shopping_bag,
+                                          color: AppColors.canvasColor,
+                                          size: 14.sp,
+                                        ),
+                                        3.horizontalSpace,
+                                        Text(
+                                          "Add",
+                                          style: bold.copyWith(color: Colors.white, fontSize: 11.sp),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 )
                               ],

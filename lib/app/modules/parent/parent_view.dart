@@ -25,6 +25,15 @@ class ParentView extends GetView<ParentController> {
             color: AppColors.primary,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.shopping_bag,
+              color: AppColors.primary,
+            ),
+          )
+        ],
       ),
       body: Obx(
         () => controller.navigation[controller.selectedIndex.value],

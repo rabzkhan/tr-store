@@ -43,7 +43,7 @@ class MyApp extends GetView {
           useInheritedMediaQuery: true,
           debugShowCheckedModeBanner: false,
           initialRoute: AppPages.PARENT,
-          defaultTransition: Transition.circularReveal,
+          defaultTransition: Transition.cupertino,
           getPages: AppPages.routes,
         );
       },

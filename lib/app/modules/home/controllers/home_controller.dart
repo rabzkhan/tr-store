@@ -1,13 +1,9 @@
-import 'dart:async';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
-import 'package:trstore/app/modules/home/model/product_model.dart';
 import '../../../../constants/app_urls.dart';
 import '../../../service/api/dio_client.dart';
 import '../../../service/network/exception_handler.dart';
 import '../../../service/network/network_connectivity.dart';
+import '../model/product_model.dart';
 
 class HomeController extends GetxController with ExceptionHandler {
   RxBool isProductListLoading = false.obs;
