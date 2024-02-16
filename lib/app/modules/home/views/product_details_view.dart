@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:get/get.dart';
+import 'package:trstore/app/modules/cart/controllers/cart_controller.dart';
+import 'package:trstore/app/modules/cart/models/cart_model.dart';
 import 'package:trstore/app/modules/home/model/product_model.dart';
 
 import '../../../../constants/app_colors.dart';
@@ -15,11 +17,6 @@ class ProductDetailsView extends StatefulWidget {
 }
 
 class _ProductDetailsViewState extends State<ProductDetailsView> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,8 +82,17 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                         )
                       ],
                     ),
-                    GestureDetector(
-                      onTap: () {},
+                    InkWell(
+                      onTap: () async {
+                        CartModel cartItem = CartModel(
+                            productId: widget.products.id,
+                            title: widget.products.title,
+                            description: widget.products.content,
+                            imageUrl: widget.products.thumbnail,
+                            price: widget.products.price,
+                            quantity: 1);
+                        Get.find<CartController>().addToCart(cartItem);
+                      },
                       child: Container(
                         decoration: BoxDecoration(
                           color: AppColors.primary.withOpacity(0.5),

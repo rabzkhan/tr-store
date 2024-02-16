@@ -13,7 +13,7 @@ class CustomSnackBar {
     Get.snackbar(
       title,
       message,
-      duration: duration ?? const Duration(seconds: 2),
+      duration: duration ?? const Duration(seconds: 1),
       margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
       padding: const EdgeInsets.all(18),
       borderRadius: 50,
@@ -36,7 +36,7 @@ class CustomSnackBar {
     Get.snackbar(
       title,
       message,
-      duration: duration ?? const Duration(seconds: 2),
+      duration: duration ?? const Duration(seconds: 1),
       margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
       padding: const EdgeInsets.all(18),
       borderRadius: 50,
@@ -59,7 +59,7 @@ class CustomSnackBar {
   // 1. success toast
   static showToast({required String message, Color? color, Duration? duration}) {
     Get.rawSnackbar(
-      duration: duration ?? const Duration(seconds: 2),
+      duration: duration ?? const Duration(seconds: 1),
       margin: const EdgeInsets.only(top: 10, left: 18, right: 18),
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
       borderRadius: 50,
@@ -85,7 +85,7 @@ class CustomSnackBar {
   // 2. info toast
   static showInfoToast({required String message, Color? color, Duration? duration}) {
     Get.rawSnackbar(
-      duration: duration ?? const Duration(seconds: 2),
+      duration: duration ?? const Duration(seconds: 1),
       margin: const EdgeInsets.only(top: 10, left: 18, right: 18),
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
       borderRadius: 50,
@@ -113,7 +113,7 @@ class CustomSnackBar {
   // 3. error toast
   static showErrorToast({required String message, Color? color, Duration? duration}) {
     Get.rawSnackbar(
-      duration: duration ?? const Duration(seconds: 2),
+      duration: duration ?? const Duration(seconds: 1),
       margin: const EdgeInsets.only(top: 10, left: 18, right: 18),
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
       borderRadius: 50,

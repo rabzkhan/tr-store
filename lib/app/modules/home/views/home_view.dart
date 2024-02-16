@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:trstore/app/modules/home/views/product_details_view.dart';
+import 'package:trstore/app/modules/cart/controllers/cart_controller.dart';
 import 'package:trstore/constants/app_colors.dart';
 import 'package:trstore/constants/app_text.dart';
 import 'package:trstore/helpers/helpers.dart';
+import '../../cart/models/cart_model.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -95,11 +96,19 @@ class HomeView extends GetView<HomeController> {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    Get.to(() => ProductDetailsView(controller.products[index]));
+                                    CartModel cartItem = CartModel(
+                                      productId: controller.products[index].id,
+                                      title: controller.products[index].title,
+                                      description: controller.products[index].content,
+                                      imageUrl: controller.products[index].thumbnail,
+                                      price: controller.products[index].price,
+                                      quantity: 1,
+                                    );
+                                    Get.find<CartController>().addToCart(cartItem);
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(
-                                      color: AppColors.primary,
+                                      color: AppColors.primary.withOpacity(0.5),
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(12.r),
                                       ),

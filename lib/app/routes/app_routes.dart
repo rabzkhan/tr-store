@@ -8,6 +8,7 @@ abstract class Routes {
 
   static const PARENT = _Paths.PARENT;
   static const HOME = _Paths.HOME;
+  static const CART = _Paths.CART;
 }
 
 abstract class _Paths {
@@ -15,4 +16,5 @@ abstract class _Paths {
 
   static const PARENT = '/parent';
   static const HOME = '/home';
+  static const CART = '/cart';
 }
