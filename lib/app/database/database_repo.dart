@@ -55,9 +55,9 @@ class DatabaseRepository {
       final existingItem = await db.query(DbConst.tableName, where: 'productId = ?', whereArgs: [cart.productId]);
       if (existingItem.isEmpty) {
         await db.insert(DbConst.tableName, cart.toMap());
-        CustomSnackBar.showToast(message: "Product added to cart!");
+        showToast("Product added to cart!");
       } else {
-        CustomSnackBar.showToast(message: "Product already in cart!");
+        showToast("Product already in cart!");
       }
     } catch (e) {
       Logger().d(e.toString());
@@ -74,7 +74,7 @@ class DatabaseRepository {
         where: '${DbConst.productId} = $productId',
         whereArgs: [],
       );
-      CustomSnackBar.showToast(message: "Product deleted from cart!");
+      showToast("Product removed from cart!");
     } catch (e) {
       Logger().d(e.toString());
     } finally {

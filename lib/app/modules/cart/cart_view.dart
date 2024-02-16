@@ -1,28 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 import 'package:trstore/app/modules/cart/controllers/cart_controller.dart';
+import 'package:trstore/constants/app_images.dart';
 import 'package:trstore/constants/app_text.dart';
 
 import '../../../constants/app_colors.dart';
 import '../../../helpers/helpers.dart';
 import 'models/cart_model.dart';
 
-class CartView extends StatefulWidget {
+class CartView extends GetView<CartController> {
   const CartView({super.key});
-
-  @override
-  State<CartView> createState() => _CartViewState();
-}
-
-class _CartViewState extends State<CartView> {
-  CartController cartController = Get.find();
-  @override
-  void initState() {
-    cartController.getCartItems();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,16 +26,30 @@ class _CartViewState extends State<CartView> {
             ),
             20.verticalSpace,
             Obx(() {
-              if (cartController.cartItems.isEmpty) {
-                return Text("Your cart is empty ");
+              if (controller.cartItems.isEmpty) {
+                return Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        AppImages.kEmptyCar,
+                        height: 100.sp,
+                      ),
+                      Text(
+                        "Your cart is empty!",
+                        style: semiBold,
+                      ),
+                    ],
+                  ),
+                );
               }
 
               return Expanded(
                 child: ListView.builder(
-                  itemCount: cartController.cartItems.length,
+                  itemCount: controller.cartItems.length,
                   itemBuilder: (BuildContext context, int index) {
-                    int productPrice =
-                        cartController.cartItems[index].price! * cartController.cartItems[index].quantity!;
+                    int productPrice = controller.cartItems[index].price! * controller.cartItems[index].quantity!;
                     return Container(
                       margin: EdgeInsets.all(6.sp),
                       decoration: BoxDecoration(
@@ -69,7 +71,7 @@ class _CartViewState extends State<CartView> {
                             Expanded(
                               flex: 2,
                               child: CustomNetworkImage(
-                                url: cartController.cartItems[index].imageUrl ?? "",
+                                url: controller.cartItems[index].imageUrl ?? "",
                                 height: 140.sp,
                                 radius: 10.sp,
                                 width: double.infinity,
@@ -84,14 +86,14 @@ class _CartViewState extends State<CartView> {
                                   Column(
                                     children: [
                                       Text(
-                                        cartController.cartItems[index].title ?? '',
+                                        controller.cartItems[index].title ?? '',
                                         style: semiBold,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                       2.verticalSpace,
                                       Text(
-                                        cartController.cartItems[index].description ?? '',
+                                        controller.cartItems[index].description ?? '',
                                         style: light.copyWith(fontSize: 12.sp),
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
@@ -112,32 +114,32 @@ class _CartViewState extends State<CartView> {
                                         children: [
                                           IconButton(
                                               onPressed: () {
-                                                int currentQuantiy = cartController.cartItems[index].quantity!;
-                                                if (currentQuantiy > 0) {
+                                                int currentQuantiy = controller.cartItems[index].quantity!;
+                                                if (currentQuantiy > 1) {
                                                   currentQuantiy--;
                                                 }
                                                 CartModel cartItem = CartModel(
-                                                  productId: cartController.cartItems[index].productId,
-                                                  title: cartController.cartItems[index].title,
-                                                  description: cartController.cartItems[index].description,
-                                                  imageUrl: cartController.cartItems[index].imageUrl,
-                                                  price: cartController.cartItems[index].price,
+                                                  productId: controller.cartItems[index].productId,
+                                                  title: controller.cartItems[index].title,
+                                                  description: controller.cartItems[index].description,
+                                                  imageUrl: controller.cartItems[index].imageUrl,
+                                                  price: controller.cartItems[index].price,
                                                   quantity: currentQuantiy,
                                                 );
                                                 Get.find<CartController>().updateCart(cartItem);
                                               },
                                               icon: const Icon(Icons.remove_circle)),
-                                          Text(cartController.cartItems[index].quantity.toString(), style: bold),
+                                          Text(controller.cartItems[index].quantity.toString(), style: bold),
                                           IconButton(
                                               onPressed: () {
-                                                int currentQuantiy = cartController.cartItems[index].quantity!;
+                                                int currentQuantiy = controller.cartItems[index].quantity!;
                                                 currentQuantiy++;
                                                 CartModel cartItem = CartModel(
-                                                  productId: cartController.cartItems[index].productId,
-                                                  title: cartController.cartItems[index].title,
-                                                  description: cartController.cartItems[index].description,
-                                                  imageUrl: cartController.cartItems[index].imageUrl,
-                                                  price: cartController.cartItems[index].price!,
+                                                  productId: controller.cartItems[index].productId,
+                                                  title: controller.cartItems[index].title,
+                                                  description: controller.cartItems[index].description,
+                                                  imageUrl: controller.cartItems[index].imageUrl,
+                                                  price: controller.cartItems[index].price!,
                                                   quantity: currentQuantiy,
                                                 );
                                                 Get.find<CartController>().updateCart(cartItem);
@@ -147,7 +149,7 @@ class _CartViewState extends State<CartView> {
                                       ),
                                       IconButton(
                                           onPressed: () {
-                                            cartController.deleteCartItems(cartController.cartItems[index].productId!);
+                                            controller.deleteCartItems(controller.cartItems[index].productId!);
                                           },
                                           icon: Icon(
                                             Icons.delete,

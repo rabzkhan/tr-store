@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:trstore/app/modules/cart/controllers/cart_controller.dart';
 import '../../../../constants/app_urls.dart';
 import '../../../service/api/dio_client.dart';
 import '../../../service/network/exception_handler.dart';
@@ -30,6 +31,7 @@ class HomeController extends GetxController with ExceptionHandler {
   @override
   void onInit() {
     getProductList();
+    Get.find<CartController>().getCartItems();
     super.onInit();
   }
 }

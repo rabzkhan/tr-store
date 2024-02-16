@@ -5,8 +5,10 @@ import 'package:trstore/app/modules/cart/controllers/cart_controller.dart';
 import 'package:trstore/constants/app_colors.dart';
 import 'package:trstore/constants/app_text.dart';
 import 'package:trstore/helpers/helpers.dart';
+import '../../../../constants/app_images.dart';
 import '../../cart/models/cart_model.dart';
 import '../controllers/home_controller.dart';
+import 'product_shimmer.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
@@ -16,13 +18,24 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
       body: Obx(() {
         if (controller.isProductListLoading.value) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return productShimmer();
         }
         if (controller.products.isEmpty) {
-          return const Center(
-            child: Text("No Products Available"),
+          return Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  AppImages.kNoData,
+                  height: 100.sp,
+                ),
+                Text(
+                  "No available products!",
+                  style: semiBold,
+                ),
+              ],
+            ),
           );
         }
         return RefreshIndicator(
