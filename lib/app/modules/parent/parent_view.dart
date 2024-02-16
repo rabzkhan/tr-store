@@ -78,13 +78,6 @@ class ParentView extends GetView<ParentController> {
                   decoration: BoxDecoration(
                     color: AppColors.primary,
                     borderRadius: BorderRadius.circular(50.r),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.litegray,
-                        spreadRadius: 0,
-                        blurRadius: 10.r,
-                      ),
-                    ],
                   ),
                   margin: EdgeInsets.symmetric(horizontal: 65.w),
                   child: SizedBox(
@@ -107,17 +100,17 @@ class ParentView extends GetView<ParentController> {
                                 },
                                 icon: Icon(
                                   Icons.home,
-                                  color: Colors.white,
+                                  color: controller.selectedIndex.value == 0 ? Colors.white : Colors.grey.shade100,
                                   size: 25.sp,
                                 ),
                               ),
                             ),
                             SizedBox(height: 2.sp),
                             Container(
-                              height: 8,
-                              width: 8,
+                              height: 4.h,
+                              width: 30.w,
                               decoration: BoxDecoration(
-                                shape: BoxShape.circle,
+                                borderRadius: BorderRadius.all(Radius.circular(4.r)),
                                 color: controller.selectedIndex.value == 0 ? Colors.white : Colors.transparent,
                               ),
                             ),
@@ -140,7 +133,7 @@ class ParentView extends GetView<ParentController> {
                                     },
                                     icon: Icon(
                                       Icons.shopping_bag,
-                                      color: Colors.white,
+                                      color: controller.selectedIndex.value == 1 ? Colors.white : Colors.grey.shade100,
                                       size: 25.sp,
                                     ),
                                   ),
@@ -149,10 +142,10 @@ class ParentView extends GetView<ParentController> {
                             ),
                             SizedBox(height: 2.sp),
                             Container(
-                              height: 8,
-                              width: 8,
+                              height: 4.h,
+                              width: 30.w,
                               decoration: BoxDecoration(
-                                shape: BoxShape.circle,
+                                borderRadius: BorderRadius.all(Radius.circular(4.r)),
                                 color: controller.selectedIndex.value == 1 ? Colors.white : Colors.transparent,
                               ),
                             ),

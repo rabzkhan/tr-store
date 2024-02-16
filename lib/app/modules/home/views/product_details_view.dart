@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:trstore/app/modules/cart/controllers/cart_controller.dart';
 import 'package:trstore/app/modules/cart/models/cart_model.dart';
 import 'package:trstore/app/modules/home/model/product_model.dart';
+import 'package:trstore/app/modules/parent/parent_controller.dart';
 
 import '../../../../constants/app_colors.dart';
 import '../../../../constants/app_text.dart';
@@ -25,6 +26,44 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
           'Product Details',
           style: bold.copyWith(fontSize: 16.sp),
         ),
+        actions: [
+          Obx(() {
+            if (Get.find<ParentController>().selectedIndex == 1) {
+              return const SizedBox();
+            }
+            return Stack(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Get.find<ParentController>().selectedIndex.value = 1;
+                    Get.back();
+                  },
+                  icon: const Icon(
+                    Icons.shopping_bag,
+                    color: AppColors.primary,
+                  ),
+                ),
+                Get.find<CartController>().cartItems.isNotEmpty
+                    ? Positioned(
+                        top: 6.sp,
+                        right: 6.sp,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.red,
+                          ),
+                          padding: EdgeInsets.all(6.sp),
+                          child: Text(
+                            Get.find<CartController>().cartItems.length.toString(),
+                            style: bold.copyWith(color: Colors.white, fontSize: 10.sp),
+                          ),
+                        ),
+                      )
+                    : const SizedBox(),
+              ],
+            );
+          })
+        ],
       ),
       body: Column(
         children: [
@@ -56,71 +95,56 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                       overflow: TextOverflow.ellipsis,
                     ),
                     15.verticalSpace,
-                    Text(
-                      "${widget.products.price?.toStringAsFixed(2)} BDT",
-                      style: bold.copyWith(fontSize: 20.sp),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Quantity:",
-                          style: semiBold.copyWith(fontSize: 14.sp),
+                          "${widget.products.price?.toStringAsFixed(2)} BDT",
+                          style: bold.copyWith(fontSize: 20.sp),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        Row(
-                          children: [
-                            IconButton(onPressed: () {}, icon: const Icon(Icons.remove_circle)),
-                            Text("0", style: bold),
-                            IconButton(onPressed: () {}, icon: const Icon(Icons.add_circle)),
-                          ],
+                        InkWell(
+                          onTap: () async {
+                            CartModel cartItem = CartModel(
+                                productId: widget.products.id,
+                                title: widget.products.title,
+                                description: widget.products.content,
+                                imageUrl: widget.products.thumbnail,
+                                price: widget.products.price,
+                                quantity: 1);
+                            Get.find<CartController>().addToCart(cartItem);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: AppColors.primary.withOpacity(0.5),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(16.r),
+                              ),
+                            ),
+                            padding: EdgeInsets.symmetric(vertical: 6.sp, horizontal: 8.sp),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.shopping_bag,
+                                  color: AppColors.canvasColor,
+                                  size: 18.sp,
+                                ),
+                                3.horizontalSpace,
+                                Text(
+                                  "Add To Cart",
+                                  style: bold.copyWith(color: Colors.white, fontSize: 14.sp),
+                                ),
+                              ],
+                            ),
+                          ),
                         )
                       ],
                     ),
-                    InkWell(
-                      onTap: () async {
-                        CartModel cartItem = CartModel(
-                            productId: widget.products.id,
-                            title: widget.products.title,
-                            description: widget.products.content,
-                            imageUrl: widget.products.thumbnail,
-                            price: widget.products.price,
-                            quantity: 1);
-                        Get.find<CartController>().addToCart(cartItem);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: AppColors.primary.withOpacity(0.5),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(16.r),
-                          ),
-                        ),
-                        padding: EdgeInsets.symmetric(vertical: 6.sp, horizontal: 8.sp),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.shopping_bag,
-                              color: AppColors.canvasColor,
-                              size: 18.sp,
-                            ),
-                            3.horizontalSpace,
-                            Text(
-                              "Add To Cart",
-                              style: bold.copyWith(color: Colors.white, fontSize: 14.sp),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
                   ],
-                )
+                ),
               ],
             ),
           ),
