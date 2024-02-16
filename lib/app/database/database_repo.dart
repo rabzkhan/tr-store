@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:sqflite/sqflite.dart';
@@ -50,8 +52,13 @@ class DatabaseRepository {
   Future<void> insert({required CartModel cart}) async {
     try {
       final db = await database;
-      db.insert(DbConst.tableName, cart.toMap());
-      CustomSnackBar.showToast(message: "Product added to cart!");
+      final existingItem = await db.query(DbConst.tableName, where: 'productId = ?', whereArgs: [cart.productId]);
+      if (existingItem.isEmpty) {
+        await db.insert(DbConst.tableName, cart.toMap());
+        CustomSnackBar.showToast(message: "Product added to cart!");
+      } else {
+        CustomSnackBar.showToast(message: "Product already in cart!");
+      }
     } catch (e) {
       Logger().d(e.toString());
     } finally {
@@ -81,8 +88,8 @@ class DatabaseRepository {
       db.update(
         DbConst.tableName,
         cart.toMap(),
-        where: '${DbConst.id} = ?',
-        whereArgs: [cart.productId],
+        where: '${DbConst.productId} = ${cart.productId}',
+        whereArgs: [],
       );
     } catch (e) {
       Logger().d(e.toString());

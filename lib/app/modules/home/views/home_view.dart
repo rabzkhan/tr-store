@@ -104,6 +104,7 @@ class HomeView extends GetView<HomeController> {
                                       price: controller.products[index].price,
                                       quantity: 1,
                                     );
+
                                     Get.find<CartController>().addToCart(cartItem);
                                   },
                                   child: Container(

@@ -7,6 +7,7 @@ import 'package:trstore/constants/app_text.dart';
 
 import '../../../constants/app_colors.dart';
 import '../../../helpers/helpers.dart';
+import 'models/cart_model.dart';
 
 class CartView extends StatefulWidget {
   const CartView({super.key});
@@ -45,6 +46,8 @@ class _CartViewState extends State<CartView> {
                 child: ListView.builder(
                   itemCount: cartController.cartItems.length,
                   itemBuilder: (BuildContext context, int index) {
+                    int productPrice =
+                        cartController.cartItems[index].price! * cartController.cartItems[index].quantity!;
                     return Container(
                       margin: EdgeInsets.all(6.sp),
                       decoration: BoxDecoration(
@@ -97,7 +100,7 @@ class _CartViewState extends State<CartView> {
                                   ),
                                   10.verticalSpace,
                                   Text(
-                                    "${cartController.cartItems[index].price?.toStringAsFixed(2)} BDT",
+                                    "$productPrice BDT",
                                     style: bold.copyWith(fontSize: 14.sp),
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
@@ -107,9 +110,39 @@ class _CartViewState extends State<CartView> {
                                     children: [
                                       Row(
                                         children: [
-                                          IconButton(onPressed: () {}, icon: const Icon(Icons.remove_circle)),
-                                          Text("0", style: bold),
-                                          IconButton(onPressed: () {}, icon: const Icon(Icons.add_circle)),
+                                          IconButton(
+                                              onPressed: () {
+                                                int currentQuantiy = cartController.cartItems[index].quantity!;
+                                                if (currentQuantiy > 0) {
+                                                  currentQuantiy--;
+                                                }
+                                                CartModel cartItem = CartModel(
+                                                  productId: cartController.cartItems[index].productId,
+                                                  title: cartController.cartItems[index].title,
+                                                  description: cartController.cartItems[index].description,
+                                                  imageUrl: cartController.cartItems[index].imageUrl,
+                                                  price: cartController.cartItems[index].price,
+                                                  quantity: currentQuantiy,
+                                                );
+                                                Get.find<CartController>().updateCart(cartItem);
+                                              },
+                                              icon: const Icon(Icons.remove_circle)),
+                                          Text(cartController.cartItems[index].quantity.toString(), style: bold),
+                                          IconButton(
+                                              onPressed: () {
+                                                int currentQuantiy = cartController.cartItems[index].quantity!;
+                                                currentQuantiy++;
+                                                CartModel cartItem = CartModel(
+                                                  productId: cartController.cartItems[index].productId,
+                                                  title: cartController.cartItems[index].title,
+                                                  description: cartController.cartItems[index].description,
+                                                  imageUrl: cartController.cartItems[index].imageUrl,
+                                                  price: cartController.cartItems[index].price!,
+                                                  quantity: currentQuantiy,
+                                                );
+                                                Get.find<CartController>().updateCart(cartItem);
+                                              },
+                                              icon: const Icon(Icons.add_circle)),
                                         ],
                                       ),
                                       IconButton(
