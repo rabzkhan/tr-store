@@ -20,9 +20,25 @@ class CartView extends GetView<CartController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Shooping Cart",
-              style: bold.copyWith(fontSize: 16.sp),
+            InkWell(
+              onTap: () {
+                controller.calculateTotal();
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Shooping Cart",
+                    style: bold.copyWith(fontSize: 16.sp),
+                  ),
+                  Obx(
+                    () => Text(
+                      "Total : ${controller.totalPrice.toStringAsFixed(2)} BDT",
+                      style: bold.copyWith(fontSize: 16.sp),
+                    ),
+                  ),
+                ],
+              ),
             ),
             20.verticalSpace,
             Obx(() {
@@ -129,7 +145,8 @@ class CartView extends GetView<CartController> {
                                                 Get.find<CartController>().updateCart(cartItem);
                                               },
                                               icon: const Icon(Icons.remove_circle)),
-                                          Text(controller.cartItems[index].quantity.toString(), style: bold),
+                                          Text(controller.cartItems[index].quantity.toString(),
+                                              style: bold.copyWith(color: AppColors.black)),
                                           IconButton(
                                               onPressed: () {
                                                 int currentQuantiy = controller.cartItems[index].quantity!;

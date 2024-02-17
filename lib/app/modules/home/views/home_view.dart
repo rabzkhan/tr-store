@@ -33,7 +33,7 @@ class HomeView extends GetView<HomeController> {
                 ),
                 Text(
                   "No available products!",
-                  style: semiBold,
+                  style: semiBold.copyWith(color: AppColors.black),
                 ),
               ],
             ),
